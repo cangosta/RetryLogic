@@ -1,13 +1,11 @@
-LinqToSqlRetry
+RetryLogic
 ==============
 
-Available on NuGet: https://www.nuget.org/packages/LinqToSqlRetry/
+A simple library to implement [Retry Pattern](https://msdn.microsoft.com/en-us/library/dn589788.aspx) (generic support and to LinqToSql queries). This is particularly important in cloud-based infrastructures like Azure where transient failures are not uncommon. And despite the popularity of Entity Framework, Dapper, and other ORM or data access libraries, there is still a place for simple LINQ to SQL code.
 
-A simple library to help manage retries in LINQ to SQL. This is particularly important in cloud-based infrastructures like Azure where transient failures are not uncommon. And despite the popularity of Entity Framework, Dapper, and other ORM or data access libraries, there is still a place for simple LINQ to SQL code.
-
-Retry logic is provided via extension methods, so you will need to bring the `LinqToSqlRetry` namespace into scope in every file you need retry logic:
+Retry logic is provided via extension methods, so you will need to bring the `RetryLogic` namespace into scope in every file you need retry logic:
 ```
-using LinqtoSqlRetry;
+using RetryLogic;
 ```
 
 ## Retry On Submit Changes
@@ -62,3 +60,8 @@ You can also retry any arbitrary operation with the `Retry()` extension methods 
 var retryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(2), 5);
 retryPolicy.Retry(() => AMethodThatMightFail());
 ```
+
+## Future work
+* Update SQL Server policies error table
+* Create extensions for sql commands and queries
+* Write unit tests
