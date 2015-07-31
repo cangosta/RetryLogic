@@ -32,10 +32,12 @@ using(var context = new MyDbContext())
 
 ## Retry Policy
 
-The retry logic is controlled by a policy that indicates when a retry should take place and how long to wait before retrying the operation. Two policies are supplied:
+The retry logic is controlled by a policy that indicates when a retry should take place and how long to wait before retrying the operation. Four policies are supplied:
 
 * `LinearRetry` retries a specific number of times (3 by default) and waits a specified amount each time (10 seconds by default).
 * `ExponentialRetry` retries a specific number of times (3 by default) and waits an increasing multiple of time (5 seconds by default) after an initial wait on the first retry (10 seconds by default).
+* `AzureLinearRetry` the same as `LinearRetry` aborting immediately if the fault is not transient
+* `AzureExponentialRetry` the same as `ExponentialRetry` aborting immediately if the fault is not transient
 
 By default the `LinearRetry` policy is used. The policy that you use and it's settings can be changed by passing it in to any of the extension methods:
 
@@ -64,4 +66,5 @@ retryPolicy.Retry(() => AMethodThatMightFail());
 ## Future work
 * Update SQL Server policies error table
 * Create extensions for sql commands and queries
+* Improve documentation with information about the added extensions
 * Write unit tests
